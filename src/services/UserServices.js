@@ -1,8 +1,8 @@
 const { User } = require("../models");
 
 //get user from database
-exports.getUser = async (username, password) => {
-    const user = await User.findOne({ where: { username, password } });
+exports.getUser = async (username) => {
+    const user = await User.findOne({ where: { username } });
     return user;
 };
 
