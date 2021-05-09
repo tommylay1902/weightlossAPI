@@ -7,7 +7,6 @@ exports.createUser = async (req, res) => {
         if (!username || !password) return res.sendStatus(400);
 
         const userExists = await getUser(username);
-
         if (userExists) return res.sendStatus(409);
 
         await createUser(username, password);
