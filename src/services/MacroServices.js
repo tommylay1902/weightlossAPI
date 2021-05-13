@@ -11,3 +11,9 @@ exports.createMacros = async (data) => {
 
     return result;
 };
+
+exports.updateMacrosById = async (macros, data) => {
+    macros.dataValues = { ...macros.dataValues, ...data };
+
+    return macros;
+};

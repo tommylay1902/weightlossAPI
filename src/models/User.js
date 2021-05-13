@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
 
     //sequelize hook to hash password before storing in database
     User.beforeCreate(async (model, options) => {
-        const hashedPassword = await bcrypt.hash(model.password, 12);
+        const salt = await bcrypt.genSalt(12);
+        const hashedPassword = await bcrypt.hash(model.password, salt);
         model.password = hashedPassword;
     });
 
