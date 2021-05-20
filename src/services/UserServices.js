@@ -1,13 +1,15 @@
 const { User } = require("../models");
 
-//get user from database
-exports.getUser = async (username) => {
-    const user = await User.findOne({ where: { username } });
-    return user;
-};
+module.exports = class UserService {
+    //get user from database
+    async getUser(username) {
+        const user = await User.findOne({ where: { username } });
+        return user;
+    }
 
-//create user in database
-exports.createUser = async (username, password) => {
-    const result = await User.create({ username, password });
-    return result;
+    //create user in database
+    async createUser(user) {
+        const result = await User.create({ ...user });
+        return result;
+    }
 };

@@ -1,38 +1,38 @@
-const {
-    getMacrosById,
-    createMacros,
-    updateMacrosById,
-} = require("../services/MacroServices");
+const MacroService = require("../services/MacroService");
 
-exports.getMacros = async (req, res) => {
-    try {
-        const results = await getMacrosById(req.params.id);
+const ms = new MacroService();
 
-        return res.send(results);
-    } catch (error) {
-        return res.sendStatus(500);
+module.exports = class MacroController {
+    async getMacros(req, res) {
+        try {
+            const results = await ms.getMacrosById(req.params.id);
+
+            return res.send(results);
+        } catch (error) {
+            return res.sendStatus(500);
+        }
     }
-};
 
-exports.createMacros = async (req, res) => {
-    try {
-        await createMacros(req.body);
-        return res.sendStatus(201);
-    } catch (error) {
-        return res.send(error);
+    async createMacros(req, res) {
+        try {
+            await ms.createMacros(req.body);
+            return res.sendStatus(201);
+        } catch (error) {
+            return res.send(error);
+        }
     }
-};
 
-exports.updateMacros = async (req, res) => {
-    //implement a validation right here
-    const allowedUpdates = [];
-    try {
-        const data = await getMacrosById(req.params.id);
-        if (!data) return res.sendStatus(404);
+    async updateMacros(req, res) {
+        //implement a validation right here
+        const allowedUpdates = [];
+        try {
+            const data = await ms.getMacrosById(req.params.id);
+            if (!data) return res.sendStatus(404);
 
-        const results = await updateMacrosById(data, req.body);
-        return res.send(results);
-    } catch (error) {
-        return res.send(error);
+            const results = await ms.updateMacrosById(data, req.body);
+            return res.send(results);
+        } catch (error) {
+            return res.send(error);
+        }
     }
 };

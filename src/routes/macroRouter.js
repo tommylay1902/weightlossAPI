@@ -1,16 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-    getMacros,
-    createMacros,
-    updateMacros,
-} = require("../controller/MacroController");
+const MacroController = require("../controller/MacroController");
 
-router.get("/:id", getMacros);
+const mc = new MacroController();
 
-router.post("", createMacros);
+router.get("/:id", mc.getMacros);
 
-router.put("/:id", updateMacros);
+router.post("", mc.createMacros);
+
+router.put("/:id", mc.updateMacros);
 
 module.exports = router;
