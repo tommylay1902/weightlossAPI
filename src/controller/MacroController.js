@@ -35,4 +35,9 @@ module.exports = class MacroController {
             return res.send(error);
         }
     }
+
+    async deleteMacros(req, res) {
+        try {
+        } catch (error) {}
+    }
 };

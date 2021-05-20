@@ -9,13 +9,19 @@ module.exports = class MacroService {
 
     async createMacros(data) {
         const result = await Macros.create(data);
-        console.log(result);
+
         return result;
     }
 
     async updateMacrosById(macros, data) {
-        macros.dataValues = { ...macros.dataValues, ...data };
-
-        return macros;
+        try {
+            Object.entries(data).forEach(([k, v]) => {
+                macros[k] = v;
+            });
+            await macros.save();
+            return macros;
+        } catch (error) {
+            throw new Error("Error updatiing macro by id");
+        }
     }
 };
