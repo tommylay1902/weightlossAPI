@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        carb: {
+        carbs: {
             type: DataTypes.INTEGER,
             allowNull: true,
         },

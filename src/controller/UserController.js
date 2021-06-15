@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const us = new UserService();
 
 module.exports = class UserController {
+    
     async createUser(req, res) {
         try {
             const { username, password, firstName, lastName } = req.body;

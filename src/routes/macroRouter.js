@@ -11,4 +11,6 @@ router.post("", mc.createMacros);
 
 router.put("/:id", mc.updateMacros);
 
+router.delete("/:id", mc.deleteMacros);
+
 module.exports = router;

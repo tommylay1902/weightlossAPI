@@ -5,6 +5,7 @@ const helmet = require("helmet");
 
 const userRouter = require("./routes/userRouter");
 const macroRouter = require("./routes/macroRouter");
+const exerciseRouter = require("./routes/exerciseRouter")
 const db = require("./models");
 
 const app = express();
@@ -25,7 +26,9 @@ app.use(express.json());
 
 app.use("/user", userRouter);
 app.use("/macros", macroRouter);
+app.use("/exercise", exerciseRouter);
 
-db.sequelize.sync().then(() => {
+
+db.sequelize.sync({force:true}).then(() => {
     app.listen(3000, () => console.log("running"));
 });

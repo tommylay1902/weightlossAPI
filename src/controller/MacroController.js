@@ -38,6 +38,17 @@ module.exports = class MacroController {
 
     async deleteMacros(req, res) {
         try {
-        } catch (error) {}
+            const macroId = req.params.id;
+
+            const macros = await ms.getMacrosById(macroId);
+
+            if(!macros) return res.sendStatus(404);
+            
+            await ms.deleteMacrosByInstance(macros);
+            
+            return res.sendStatus(200);
+        } catch (error) {
+            return res.send(error);
+        }
     }
 };

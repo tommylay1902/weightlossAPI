@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING(50),
         },
+        description:{
+            type:DataTypes.STRING(255),
+        },
         type: {
             type: DataTypes.ENUM,
             values: ["reps", "time"],
