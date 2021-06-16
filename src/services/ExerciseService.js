@@ -13,12 +13,25 @@ module.exports =  class ExerciseServices {
 
     async createExercise(data){
         try {
-            
             const create = await Exercise.create(data);
             
             return create;
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    async updateExerciseByInstance(instance, data){
+        try {
+            Object.entries(data).forEach(([k, v]) => {
+                instance[k] = v;
+            });
+
+            await instance.save();
+            
+            return instance;
+        } catch (error) {
+            
         }
     }
 

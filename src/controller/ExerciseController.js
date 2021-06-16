@@ -37,4 +37,22 @@ module.exports = class ExerciseController{
             
         }
     }
+
+    async updateExercise(req, res){
+        //implement validation later
+        try {
+            const {id} = req.params;
+
+            const exercise = await es.getExerciseById(id);
+
+            if(!exercise) return res.sendStatus(404);
+
+            const result = await es.updateExerciseByInstance(exercise, req.body);
+
+            return res.send(result);
+
+        } catch (error) {
+            
+        }
+    }
 }
