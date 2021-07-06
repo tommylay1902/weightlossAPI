@@ -13,7 +13,7 @@
     "express-rate-limit": "^5.2.6",
     "helmet": "^4.6.0",
     "pg": "^8.6.0",
-    "sequelize": "^6.6.2",
+    "sequelize": "^6.6.5",
     "validator": "^13.6.0"
   },
   "scripts": {
