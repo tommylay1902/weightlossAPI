@@ -33,6 +33,6 @@ app.use("/macros", macroRouter);
 app.use("/exercise", exerciseRouter);
 
 //{force:true}
-db.sequelize.sync().then(() => {
+db.sequelize.sync({force:true}).then(() => {
     app.listen(3000, () => console.log("running"));
 });
