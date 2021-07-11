@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ENUM,
             values: ["reps", "time"],
         },
+        
     });
 
     return Exercise;

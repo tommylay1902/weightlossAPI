@@ -16,7 +16,6 @@ module.exports = class ExerciseController{
 
     async createExercise(req, res){
         //implement validation later
-
         try {
             const result = await es.createExercise(req.body);
             return res.send(result);

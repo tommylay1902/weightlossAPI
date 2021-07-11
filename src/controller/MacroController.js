@@ -5,7 +5,6 @@ const ms = new MacroService();
 module.exports = class MacroController {
     async getMacros(req, res) {
         try {
-            console.log(req.decoded)
             const results = await ms.getMacrosById(req.params.id);
             
             return res.send(results);

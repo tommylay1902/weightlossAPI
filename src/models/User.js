@@ -41,5 +41,9 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Macros);
     };
 
+    User.associate = (models) => {
+        User.hasMany(models.Exercise);
+    }
+
     return User;
 };

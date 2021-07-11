@@ -36,7 +36,7 @@ module.exports = class UserController {
             );
             if (!hasMatchingPass) return res.sendStatus(404);
             const userPayload = {username: user.username, id: user.id}
-            console.log(userPayload)
+
             //create jwt token when signing in
             const token = jwt.sign(userPayload, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME})
             const refreshToken = jwt.sign(userPayload, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME})
