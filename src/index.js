@@ -8,6 +8,10 @@ const macroRouter = require("./routes/macroRouter");
 const exerciseRouter = require("./routes/exerciseRouter")
 const db = require("./models");
 
+//dotenv config
+const dotenv = require('dotenv');
+dotenv.config();
+
 const app = express();
 
 //set up helmet
@@ -28,7 +32,7 @@ app.use("/user", userRouter);
 app.use("/macros", macroRouter);
 app.use("/exercise", exerciseRouter);
 
-
-db.sequelize.sync({force:true}).then(() => {
+//{force:true}
+db.sequelize.sync().then(() => {
     app.listen(3000, () => console.log("running"));
 });

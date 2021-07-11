@@ -1,6 +1,6 @@
 const UserService = require("../services/UserServices");
 const bcrypt = require("bcrypt");
-
+const jwt = require('jsonwebtoken')
 const us = new UserService();
 
 module.exports = class UserController {
@@ -35,10 +35,22 @@ module.exports = class UserController {
                 user.password
             );
             if (!hasMatchingPass) return res.sendStatus(404);
+            
+            //create jwt token when signing in
+            const token = jwt.sign(user.dataValues, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME})
+            const refreshToken = jwt.sign(user.dataValues, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME})
+            const response = {
+                "status": "Logged in",
+                "token": token,
+                "refreshToken": refreshToken,
+            }
 
-            return res.sendStatus(200);
+            //save refresh token in the database
+            await us.saveRefreshToken(user, token);
+
+            return res.send(response);
         } catch (error) {
-            return res.sendStatus(500);
+            return res.send(error.toString());
         }
     }
 };

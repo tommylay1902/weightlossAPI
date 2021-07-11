@@ -6,7 +6,7 @@ module.exports = class MacroController {
     async getMacros(req, res) {
         try {
             const results = await ms.getMacrosById(req.params.id);
-
+            
             return res.send(results);
         } catch (error) {
             return res.sendStatus(500);

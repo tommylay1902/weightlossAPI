@@ -1,11 +1,15 @@
 const express = require("express");
+
+//import jwt middleware
+const verify = require("../middleware/verifyToken");
+
 const router = express.Router();
 
 const MacroController = require("../controller/MacroController");
 
 const mc = new MacroController();
 
-router.get("/:id", mc.getMacros);
+router.get("/:id", verify, mc.getMacros);
 
 router.post("", mc.createMacros);
 

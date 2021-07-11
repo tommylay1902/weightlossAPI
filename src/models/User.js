@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        tokenArray:{
+            type:DataTypes.ARRAY(DataTypes.TEXT),
+            defaultValue:[]
+        }
+
     });
 
     //sequelize hook to hash password before storing in database

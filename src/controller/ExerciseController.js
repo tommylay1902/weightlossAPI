@@ -27,7 +27,7 @@ module.exports = class ExerciseController{
 
     async deleteExercise(req, res){
         try {
-            console.log('hello')
+           
             const exercise = await es.getExerciseById(req.params.id);
             if(!exercise) return res.sendStatus(404);
 

@@ -1,5 +1,7 @@
 const { User } = require("../models");
 
+const sequelize = require('sequelize')
+
 module.exports = class UserService {
     //get user from database
     async getUser(username) {
@@ -11,5 +13,16 @@ module.exports = class UserService {
     async createUser(user) {
         const result = await User.create({ ...user });
         return result;
+    }
+
+    //save refresh token into database
+    async saveRefreshToken(user, refreshToken){
+        try {
+            user.tokenArray = [...user.tokenArray, refreshToken];
+            await user.save();
+        } catch (error) {
+            console.log(error.toString())
+        }
+    
     }
 };
