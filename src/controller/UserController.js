@@ -35,10 +35,11 @@ module.exports = class UserController {
                 user.password
             );
             if (!hasMatchingPass) return res.sendStatus(404);
-            
+            const userPayload = {username: user.username, id: user.id}
+            console.log(userPayload)
             //create jwt token when signing in
-            const token = jwt.sign(user.dataValues, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME})
-            const refreshToken = jwt.sign(user.dataValues, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME})
+            const token = jwt.sign(userPayload, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME})
+            const refreshToken = jwt.sign(userPayload, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME})
             const response = {
                 "status": "Logged in",
                 "token": token,
@@ -51,6 +52,30 @@ module.exports = class UserController {
             return res.send(response);
         } catch (error) {
             return res.send(error.toString());
+        }
+    }
+
+    
+    async refreshAccessToken(req,res){
+
+        const postData = req.body
+        
+
+
+        if((postData.refreshToken) && (postData.refreshToken in tokenList)) {
+            const user = {
+                "username": postData.username,
+                "id": postData.id
+            }
+            const token = jwt.sign(user, config.secret, { expiresIn: config.tokenLife})
+            const response = {
+                "token": token,
+            }
+            // update the token in the list
+            tokenList[postData.refreshToken].token = token
+            res.status(200).json(response);        
+        } else {
+            res.status(404).send('Invalid request')
         }
     }
 };
