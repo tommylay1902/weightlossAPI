@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         
     });
+    
     Exercise.associate = (models)=> {
         Exercise.belongsToMany(models.Workouts, 
             {through:"ExerciseToWorkout"}

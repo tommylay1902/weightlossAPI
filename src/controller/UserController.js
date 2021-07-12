@@ -1,7 +1,11 @@
 const UserService = require("../services/UserServices");
+const AuthService = require("../services/AuthServices");
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const uuid = require('uuid');
+
 const us = new UserService();
+const as = new AuthService();
 
 module.exports = class UserController {
     
@@ -11,7 +15,7 @@ module.exports = class UserController {
             if (!username || !password || !lastName || !firstName)
                 return res.sendStatus(400);
 
-            const userExists = await us.getUser(username);
+            const userExists = await us.getUserByUsername(username);
             if (userExists) return res.sendStatus(409);
 
             await us.createUser({ ...req.body });
@@ -24,30 +28,37 @@ module.exports = class UserController {
 
     async loginUser(req, res) {
         try {
+            
             const { username, password } = req.body;
             if (!username || !password) return res.sendStatus(400);
 
-            const user = await us.getUser(username);
+            const user = await us.getUserByUsername(username);
             if (!user) return res.sendStatus(404);
 
             const hasMatchingPass = await bcrypt.compare(
                 password,
                 user.password
             );
+
             if (!hasMatchingPass) return res.sendStatus(404);
             const userPayload = {username: user.username, id: user.id}
-
+            
+            const guid = uuid.v4();
+            
             //create jwt token when signing in
             const token = jwt.sign(userPayload, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME})
-            const refreshToken = jwt.sign(userPayload, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME})
+
+            const refreshToken = jwt.sign({guid:guid}, process.env.JWT_REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME})
             const response = {
                 "status": "Logged in",
                 "token": token,
-                "refreshToken": refreshToken,
             }
 
-            //save refresh token in the database
-            await us.saveRefreshToken(user, token);
+            //save access and refresh tokens in the database
+            const tokenPairId = await as.saveTokens(refreshToken, token);
+
+            //save unique user and tokenpairid in database
+            await as.saveAuth(user.id, tokenPairId)
 
             return res.send(response);
         } catch (error) {
@@ -55,27 +66,16 @@ module.exports = class UserController {
         }
     }
 
-    
-    async refreshAccessToken(req,res){
+    //will delete user and all authentication data from the database
+    async deleteUser(req, res){
+        try {
 
-        const postData = req.body
-        
+            const {id} = req.userAuth
 
+            return res.send({id})
 
-        if((postData.refreshToken) && (postData.refreshToken in tokenList)) {
-            const user = {
-                "username": postData.username,
-                "id": postData.id
-            }
-            const token = jwt.sign(user, config.secret, { expiresIn: config.tokenLife})
-            const response = {
-                "token": token,
-            }
-            // update the token in the list
-            tokenList[postData.refreshToken].token = token
-            res.status(200).json(response);        
-        } else {
-            res.status(404).send('Invalid request')
+        }catch(e){
+
         }
     }
 };

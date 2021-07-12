@@ -1,10 +1,14 @@
 const { User } = require("../models");
 
-const sequelize = require('sequelize')
-
 module.exports = class UserService {
+
+    async getUserByUserId(userId) {
+        const user = await User.findByPk(userId);
+        return user;
+    }
+
     //get user from database
-    async getUser(username) {
+    async getUserByUsername(username) {
         const user = await User.findOne({ where: { username } });
         return user;
     }
@@ -15,14 +19,9 @@ module.exports = class UserService {
         return result;
     }
 
-    //save refresh token into database
-    async saveRefreshToken(user, refreshToken){
-        try {
-            user.tokenArray = [...user.tokenArray, refreshToken];
-            await user.save();
-        } catch (error) {
-            console.log(error.toString())
-        }
-    
+    async deleteUser(user){
+
     }
+
+   
 };
