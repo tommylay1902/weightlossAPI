@@ -2,9 +2,8 @@ const { Macros } = require("../models");
 
 module.exports = class MacroService {
     async getMacrosById(id) {
-        
         const macros = await Macros.findByPk(id);
-       
+
         return macros;
     }
 
@@ -29,8 +28,6 @@ module.exports = class MacroService {
     async deleteMacrosByInstance(macros) {
         try {
             await macros.destroy();
-        } catch (error) {
-            
-        }
+        } catch (error) {}
     }
 };

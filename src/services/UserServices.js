@@ -1,7 +1,6 @@
 const { User } = require("../models");
 
 module.exports = class UserService {
-
     async getUserByUserId(userId) {
         const user = await User.findByPk(userId);
         return user;
@@ -19,9 +18,5 @@ module.exports = class UserService {
         return result;
     }
 
-    async deleteUser(user){
-
-    }
-
-   
+    async deleteUser(user) {}
 };

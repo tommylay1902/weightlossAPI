@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Auth = sequelize.define("Auth", {
-        id:{
+        id: {
             type: DataTypes.INTEGER,
-            primaryKey : true,
+            primaryKey: true,
             autoIncrement: true,
-        }
+        },
     });
-    
+
     return Auth;
 };

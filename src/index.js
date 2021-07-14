@@ -5,11 +5,11 @@ const helmet = require("helmet");
 
 const userRouter = require("./routes/userRouter");
 const macroRouter = require("./routes/macroRouter");
-const exerciseRouter = require("./routes/exerciseRouter")
+const exerciseRouter = require("./routes/exerciseRouter");
 const db = require("./models");
 
 //dotenv config
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
     });
 
     //sequelize hook to hash password before storing in database
@@ -38,18 +38,18 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = (models) => {
         User.hasMany(models.Exercise);
-    }
+    };
 
     //many to many for sessionid to refreshtokens
-    User.associate = (models)=> {
+    User.associate = (models) => {
         User.belongsToMany(models.Tokens, {
-            through:"Auth",
-            foreignKey:"userId",
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
-            onCascade:'delete',
-            allowNull:'false'
+            through: "Auth",
+            foreignKey: "userId",
+            onDelete: "cascade",
+            onUpdate: "cascade",
+            onCascade: "delete",
+            allowNull: "false",
         });
-    }
-     return User;
+    };
+    return User;
 };

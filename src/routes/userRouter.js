@@ -7,6 +7,6 @@ const uc = new UserController();
 
 router.post("", uc.createUser);
 router.post("/login", uc.loginUser);
-router.delete("/delete", authMiddleware, uc.deleteUser)
+router.delete("/delete", authMiddleware, uc.deleteUser);
 
 module.exports = router;
