@@ -32,12 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         model.password = hashedPassword;
     });
 
+    //a user can have many Nutrition plans
     User.associate = (models) => {
-        User.hasMany(models.Macros);
+        User.hasMany(models.Nutrition);
     };
 
+    //a user can have many workouts
     User.associate = (models) => {
-        User.hasMany(models.Exercise);
+        User.hasMany(models.Nutrition);
     };
 
     return User;

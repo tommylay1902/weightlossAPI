@@ -1,11 +1,11 @@
-const MacroService = require("../services/MacroService");
+const NutritionService = require("../services/NutritionService");
 
-const ms = new MacroService();
+const ns = new NutritionService();
 
-module.exports = class MacroController {
-    async getMacros(req, res) {
+module.exports = class NutritionController {
+    async getNutrition(req, res) {
         try {
-            const results = await ms.getMacrosById(req.params.id);
+            const results = await ns.getNutritionById(req.params.id);
 
             return res.send(results);
         } catch (error) {
@@ -13,38 +13,38 @@ module.exports = class MacroController {
         }
     }
 
-    async createMacros(req, res) {
+    async createNutrition(req, res) {
         try {
-            await ms.createMacros(req.body);
+            await ns.createNutrition(req.body);
             return res.sendStatus(201);
         } catch (error) {
             return res.send(error);
         }
     }
 
-    async updateMacros(req, res) {
+    async updateNutrition(req, res) {
         //implement a validation right here
         const allowedUpdates = [];
         try {
-            const data = await ms.getMacrosById(req.params.id);
+            const data = await ns.getNutritionById(req.params.id);
             if (!data) return res.sendStatus(404);
 
-            const results = await ms.updateMacrosById(data, req.body);
+            const results = await ns.updateNutritionById(data, req.body);
             return res.send(results);
         } catch (error) {
             return res.send(error);
         }
     }
 
-    async deleteMacros(req, res) {
+    async deleteNutrition(req, res) {
         try {
             const macroId = req.params.id;
 
-            const macros = await ms.getMacrosById(macroId);
+            const macros = await ns.getNutritionById(macroId);
 
             if (!macros) return res.sendStatus(404);
 
-            await ms.deleteMacrosByInstance(macros);
+            await ns.deleteNutritionByInstance(macros);
 
             return res.sendStatus(200);
         } catch (error) {

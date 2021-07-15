@@ -4,7 +4,7 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 
 const userRouter = require("./routes/userRouter");
-const macroRouter = require("./routes/macroRouter");
+const nutritionRouter = require("./routes/nutritionRouter");
 const exerciseRouter = require("./routes/exerciseRouter");
 const authRouter = require("./routes/authRouter");
 const db = require("./models");
@@ -30,11 +30,11 @@ app.use(cors("*"));
 app.use(express.json());
 
 app.use("/user", userRouter);
-app.use("/macros", macroRouter);
+app.use("/nutrition", nutritionRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/auth", authRouter);
 
 //{force:true}
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
     app.listen(process.env.PORT, () => console.log("running"));
 });

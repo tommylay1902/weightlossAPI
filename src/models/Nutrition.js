@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Macros = sequelize.define("Macros", {
+    const Nutrition = sequelize.define("Nutrition", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.STRING(50),
+        },
+        calories: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
         },
         fat: {
             type: DataTypes.INTEGER,
@@ -22,5 +26,5 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    return Macros;
+    return Nutrition;
 };
