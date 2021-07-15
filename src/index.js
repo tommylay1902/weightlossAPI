@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const userRouter = require("./routes/userRouter");
 const macroRouter = require("./routes/macroRouter");
 const exerciseRouter = require("./routes/exerciseRouter");
+const authRouter = require("./routes/authRouter");
 const db = require("./models");
 
 //dotenv config
@@ -25,12 +26,13 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-app.use(cors());
+app.use(cors("*"));
 app.use(express.json());
 
 app.use("/user", userRouter);
 app.use("/macros", macroRouter);
 app.use("/exercise", exerciseRouter);
+app.use("/auth", authRouter);
 
 //{force:true}
 db.sequelize.sync().then(() => {
