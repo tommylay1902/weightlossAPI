@@ -26,5 +26,12 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    Nutrition.associate = (models) => {
+        Nutrition.belongsTo(models.User, {
+            foreignKey: "userId",
+            targetKey: "id",
+        });
+    };
+
     return Nutrition;
 };

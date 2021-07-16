@@ -1,7 +1,7 @@
 const express = require("express");
 
 //import jwt middleware
-const verify = require("../middleware/verifyToken");
+const auth = require("../middleware/verifyToken");
 
 const router = express.Router();
 
@@ -9,9 +9,9 @@ const NutritionController = require("../controller/NutritionController");
 
 const nc = new NutritionController();
 
-router.get("/:id", verify, nc.getNutrition);
+router.get("/:id", auth, nc.getNutrition);
 
-router.post("", nc.createNutrition);
+router.post("", auth, nc.createNutrition);
 
 router.put("/:id", nc.updateNutrition);
 

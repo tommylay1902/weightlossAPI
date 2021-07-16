@@ -32,14 +32,17 @@ module.exports = (sequelize, DataTypes) => {
         model.password = hashedPassword;
     });
 
-    //a user can have many Nutrition plans
     User.associate = (models) => {
-        User.hasMany(models.Nutrition);
-    };
-
-    //a user can have many workouts
-    User.associate = (models) => {
-        User.hasMany(models.Nutrition);
+        //a user can have many Nutrition plans
+        User.hasMany(models.Nutrition, {
+            foreignKey: "userId",
+            targetKey: "id",
+        });
+        //a user can have many workout plans
+        User.hasMany(models.Workouts, {
+            foreignKey: "userId",
+            targetKey: "id",
+        });
     };
 
     return User;

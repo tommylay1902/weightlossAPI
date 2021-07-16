@@ -15,10 +15,13 @@ module.exports = class NutritionController {
 
     async createNutrition(req, res) {
         try {
-            await ns.createNutrition(req.body);
+            const userId = req.userAuth.id;
+
+            const createData = { ...req.body, userId };
+            await ns.createNutrition(createData);
             return res.sendStatus(201);
         } catch (error) {
-            return res.send(error);
+            return res.send(error.toString());
         }
     }
 

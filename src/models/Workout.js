@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         Workout.belongsToMany(models.Exercise, {
             through: "ExerciseToWorkout",
         });
+        Workout.belongsTo(models.User, {
+            foreignKey: "userId",
+            targetKey: "id",
+        });
     };
 
     return Workout;
