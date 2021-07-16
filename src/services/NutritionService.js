@@ -1,10 +1,31 @@
 const { Nutrition } = require("../models");
+const { Op } = require("sequelize");
 
 module.exports = class NutritionService {
-    async getNutritionById(id) {
-        const nutrition = await Nutrition.findByPk(id);
+    //gets an indiviual Nutrition record from the user logged in
+    async getNutritionByIdAndUser(id, userId) {
+        const nutrition = await Nutrition.findOne({
+            where: {
+                [Op.and]: [
+                    {
+                        id,
+                    },
+                    { userId },
+                ],
+            },
+        });
 
         return nutrition;
+    }
+
+    //implement get all nutrition plans belonging to a user
+    async getAllNutritionFromUser(userId) {
+        const nutritions = await Nutrition.findAll({
+            where: {
+                userId,
+            },
+        });
+        return nutritions;
     }
 
     async createNutrition(data) {

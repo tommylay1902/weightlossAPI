@@ -9,7 +9,9 @@ const NutritionController = require("../controller/NutritionController");
 
 const nc = new NutritionController();
 
-router.get("/:id", auth, nc.getNutrition);
+router.get("/:id", auth, nc.getSpecificNutrition);
+
+router.get("", auth, nc.getNutrition);
 
 router.post("", auth, nc.createNutrition);
 

@@ -3,14 +3,32 @@ const NutritionService = require("../services/NutritionService");
 const ns = new NutritionService();
 
 module.exports = class NutritionController {
-    async getNutrition(req, res) {
+    //get nutrition belonging to the logged in user
+    async getSpecificNutrition(req, res) {
         try {
-            const results = await ns.getNutritionById(req.params.id);
+            const userId = req.userAuth.id;
+            const nId = req.params.id;
+
+            const results = await ns.getNutritionByIdAndUser(
+                req.params.id,
+                userId
+            );
+
+            if (!results) return res.sendStatus(403);
 
             return res.send(results);
         } catch (error) {
             return res.sendStatus(500);
         }
+    }
+
+    //gets all nutrition plans from the logged in user
+    async getNutrition(req, res) {
+        try {
+            const userId = req.userAuth.id;
+            const results = await ns.getAllNutritionFromUser(userId);
+            res.send(results);
+        } catch (error) {}
     }
 
     async createNutrition(req, res) {
