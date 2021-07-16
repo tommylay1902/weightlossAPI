@@ -25,6 +25,7 @@ module.exports = class NutritionService {
                 userId,
             },
         });
+
         return nutritions;
     }
 
@@ -40,7 +41,6 @@ module.exports = class NutritionService {
                 nutrition[k] = v;
             });
             await nutrition.save();
-            return nutrition;
         } catch (error) {
             throw new Error("Error updatiing macro by id");
         }

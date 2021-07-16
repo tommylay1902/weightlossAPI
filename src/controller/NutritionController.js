@@ -1,3 +1,4 @@
+const validateUpdate = require("../validation/nutrition");
 const NutritionService = require("../services/NutritionService");
 
 const ns = new NutritionService();
@@ -9,12 +10,9 @@ module.exports = class NutritionController {
             const userId = req.userAuth.id;
             const nId = req.params.id;
 
-            const results = await ns.getNutritionByIdAndUser(
-                req.params.id,
-                userId
-            );
+            const results = await ns.getNutritionByIdAndUser(nId, userId);
 
-            if (!results) return res.sendStatus(403);
+            if (!results) return res.sendStatus(404);
 
             return res.send(results);
         } catch (error) {
@@ -37,6 +35,7 @@ module.exports = class NutritionController {
 
             const createData = { ...req.body, userId };
             await ns.createNutrition(createData);
+
             return res.sendStatus(201);
         } catch (error) {
             return res.send(error.toString());
@@ -44,24 +43,35 @@ module.exports = class NutritionController {
     }
 
     async updateNutrition(req, res) {
-        //implement a validation right here
-        const allowedUpdates = [];
         try {
-            const data = await ns.getNutritionById(req.params.id);
+            //validate input
+            await validateUpdate.validateAsync(req.body);
+
+            const userId = req.userAuth.id;
+
+            if (req.params.userId) return res.send(400);
+
+            const data = await ns.getNutritionByIdAndUser(
+                req.params.id,
+                userId
+            );
+
             if (!data) return res.sendStatus(404);
 
-            const results = await ns.updateNutritionById(data, req.body);
-            return res.send(results);
+            await ns.updateNutritionById(data, req.body);
+
+            return res.sendStatus(200);
         } catch (error) {
-            return res.send(error);
+            return res.status(400).send(error);
         }
     }
 
     async deleteNutrition(req, res) {
         try {
+            const userId = req.userAuth.id;
             const macroId = req.params.id;
 
-            const macros = await ns.getNutritionById(macroId);
+            const macros = await ns.getNutritionByIdAndUser(macroId, userId);
 
             if (!macros) return res.sendStatus(404);
 

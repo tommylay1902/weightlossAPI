@@ -3,6 +3,15 @@ const UserService = require("../services/UserServices");
 const us = new UserService();
 
 module.exports = class UserController {
+    async getUser(req, res) {
+        try {
+            const userId = req.userAuth.id;
+            const user = await us.getUserByUserId(userId);
+            return res.send(user);
+        } catch (error) {
+            return res.send(error.toString());
+        }
+    }
     async createUser(req, res) {
         try {
             const { username, password, firstName, lastName } = req.body;

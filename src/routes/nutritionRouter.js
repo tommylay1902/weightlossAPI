@@ -15,8 +15,8 @@ router.get("", auth, nc.getNutrition);
 
 router.post("", auth, nc.createNutrition);
 
-router.put("/:id", nc.updateNutrition);
+router.put("/:id", auth, nc.updateNutrition);
 
-router.delete("/:id", nc.deleteNutrition);
+router.delete("/:id", auth, nc.deleteNutrition);
 
 module.exports = router;

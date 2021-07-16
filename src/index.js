@@ -35,6 +35,6 @@ app.use("/exercise", exerciseRouter);
 app.use("/auth", authRouter);
 
 //{force:true}
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync().then(() => {
     app.listen(process.env.PORT, () => console.log("running"));
 });

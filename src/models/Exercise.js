@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    //will hide unnecessary data
+    Exercise.afterCreate(async (model, options) => {
+        delete model.dataValues.id;
+        delete model.dataValues.createdAt;
+        delete model.dataValues.updatedAt;
+    });
+
     Exercise.associate = (models) => {
         Exercise.belongsToMany(models.Workouts, {
             through: "ExerciseToWorkout",
