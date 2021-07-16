@@ -4,9 +4,9 @@ const router = express.Router();
 const Controller = require("../controller/ExerciseController");
 const ec = new Controller();
 
-router.get("/:id", ec.getExercise);
-router.post("", ec.createExercise);
-router.delete("/:id", ec.deleteExercise);
-router.put("/:id", ec.updateExercise);
+router.get("/:id", auth, ec.getExercise);
+router.post("", auth, ec.createExercise);
+router.delete("/:id", auth, ec.deleteExercise);
+router.put("/:id", auth, ec.updateExercise);
 
 module.exports = router;

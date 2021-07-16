@@ -2,6 +2,8 @@ const UserService = require("../services/UserServices");
 
 const us = new UserService();
 
+const userValidation = require("../validation/users");
+
 module.exports = class UserController {
     async getUser(req, res) {
         try {
@@ -12,19 +14,19 @@ module.exports = class UserController {
             return res.send(error.toString());
         }
     }
+
     async createUser(req, res) {
         try {
-            const { username, password, firstName, lastName } = req.body;
-            if (!username || !password || !lastName || !firstName)
-                return res.sendStatus(400);
+            //validate all users
+            await userValidation.validateAsync(req.body);
 
-            const userExists = await us.getUserByUsername(username);
+            const userExists = await us.getUserByUsername(req.body.username);
             if (userExists) return res.sendStatus(409);
 
             await us.createUser({ ...req.body });
             return res.sendStatus(201);
         } catch (error) {
-            console.log(error);
+            console.log(error.toString());
             return res.sendStatus(400);
         }
     }

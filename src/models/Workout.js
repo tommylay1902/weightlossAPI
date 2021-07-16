@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    Workout.afterCreate((models, options) => {
+        delete models.dataValues.id;
+    });
+
     Workout.associate = (models) => {
         Workout.belongsToMany(models.Exercise, {
             through: "ExerciseToWorkout",
