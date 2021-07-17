@@ -32,14 +32,6 @@ module.exports = (sequelize, DataTypes) => {
         model.password = hashedPassword;
     });
 
-    //will hide unnecessary data
-    User.afterCreate(async (model, options) => {
-        delete model.dataValues.password;
-        delete model.dataValues.id;
-        delete model.dataValues.createdAt;
-        delete model.dataValues.updatedAt;
-    });
-
     User.associate = (models) => {
         //a user can have many Nutrition plans
         User.hasMany(models.Nutrition, {
@@ -50,6 +42,14 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Workouts, {
             foreignKey: "userId",
             targetKey: "id",
+        });
+
+        User.hasMany(models.Exercise, {
+            foreignKey: {
+                name: "createdBy",
+                target: "id",
+                allowNull: true,
+            },
         });
     };
 

@@ -11,6 +11,19 @@ module.exports = class ExerciseServices {
         }
     }
 
+    async getExerciseByIdAndUserId(id, userId) {
+        try {
+            const exercise = await Exercise.findOne({
+                where: {
+                    id,
+                    createdBy: userId,
+                },
+            });
+
+            return exercise;
+        } catch (error) {}
+    }
+
     async createExercise(data) {
         try {
             const create = await Exercise.create(data);
@@ -36,6 +49,8 @@ module.exports = class ExerciseServices {
     async deleteExerciseByInstance(exercise) {
         try {
             await exercise.destroy();
-        } catch (error) {}
+        } catch (error) {
+            console.log(error.toString());
+        }
     }
 };
