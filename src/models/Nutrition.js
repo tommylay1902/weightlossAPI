@@ -26,14 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    //will hide unnecessary data
-    Nutrition.afterCreate(async (model, options) => {
-        delete model.dataValues.id;
-        delete model.dataValues.userId;
-        delete model.dataValues.createdAt;
-        delete model.dataValues.updatedAt;
-    });
-
     Nutrition.associate = (models) => {
         Nutrition.belongsTo(models.User, {
             foreignKey: { name: "userId", allowNull: false },

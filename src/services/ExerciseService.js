@@ -18,6 +18,7 @@ module.exports = class ExerciseServices {
                     id,
                     createdBy: userId,
                 },
+                attributes: ["name", "description", "type"],
             });
 
             return exercise;

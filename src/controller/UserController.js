@@ -20,13 +20,15 @@ module.exports = class UserController {
             //validate all users
             await userValidation.validateAsync(req.body);
 
-            const userExists = await us.getUserByUsername(req.body.username);
+            const userExists = await us.getUserByUsername(req.body.username, [
+                "id",
+            ]);
+
             if (userExists) return res.sendStatus(409);
 
             await us.createUser({ ...req.body });
             return res.sendStatus(201);
         } catch (error) {
-            console.log(error.toString());
             return res.sendStatus(400);
         }
     }

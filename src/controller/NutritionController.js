@@ -1,5 +1,6 @@
-const validateUpdate = require("../validation/nutrition");
 const NutritionService = require("../services/NutritionService");
+
+const validateNutrition = require("../validation/nutrition");
 
 const ns = new NutritionService();
 
@@ -44,8 +45,7 @@ module.exports = class NutritionController {
 
     async updateNutrition(req, res) {
         try {
-            //validate input
-            await validateUpdate.validateAsync(req.body);
+            await validateNutrition.validateAsync(req.body);
 
             const userId = req.userAuth.id;
 

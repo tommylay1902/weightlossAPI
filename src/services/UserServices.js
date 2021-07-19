@@ -10,10 +10,10 @@ module.exports = class UserService {
     }
 
     //get user from database
-    async getUserByUsername(username) {
+    async getUserByUsername(username, data) {
         const user = await User.findOne({
             where: { username },
-            attributes: ["username", "firstname", "lastname"],
+            attributes: [...data],
         });
 
         return user;
@@ -21,8 +21,7 @@ module.exports = class UserService {
 
     //create user in database
     async createUser(user) {
-        const result = await User.create({ ...user });
-        return result;
+        await User.create({ ...user });
     }
 
     async deleteUser(user) {}

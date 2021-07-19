@@ -1,5 +1,5 @@
 const ExerciseService = require("../services/ExerciseService");
-const validateData = require("../validation/exercise");
+const validateExercise = require("../validation/exercise");
 
 const es = new ExerciseService();
 
@@ -11,7 +11,9 @@ module.exports = class ExerciseController {
                 req.params.id,
                 userId
             );
+
             if (!exercise) return res.sendStatus(404);
+
             return res.send(exercise);
         } catch (error) {}
     }
@@ -19,7 +21,7 @@ module.exports = class ExerciseController {
     async createExercise(req, res) {
         //implement validation later
         try {
-            await validateData.validateAsync(req.body);
+            await validateExercise.validateAsync(req.body);
 
             const userId = req.userAuth.id;
 
@@ -40,6 +42,7 @@ module.exports = class ExerciseController {
                 req.params.id,
                 userId
             );
+
             if (!exercise) return res.sendStatus(404);
 
             await es.deleteExerciseByInstance(exercise);
@@ -48,9 +51,9 @@ module.exports = class ExerciseController {
     }
 
     async updateExercise(req, res) {
-        //implement validation later
         try {
-            await validateData.validateAsync(req.body);
+            await validateExercise.validateAsync(req.body);
+
             const userId = req.userAuth.id;
             const { id } = req.params;
 

@@ -13,6 +13,7 @@ module.exports = class NutritionService {
                     { userId },
                 ],
             },
+            attributes: ["name", "calories", "fat", "carbs", "protein"],
         });
 
         return nutrition;
@@ -24,6 +25,7 @@ module.exports = class NutritionService {
             where: {
                 userId,
             },
+            attributes: ["name", "calories", "fat", "carbs", "protein"],
         });
 
         return nutritions;

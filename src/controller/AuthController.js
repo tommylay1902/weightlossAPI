@@ -2,6 +2,8 @@ const UserService = require("../services/UserServices");
 const TokenService = require("../services/TokenServices");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const validateToken = require("../validation/token");
+const validateUser = require("../validation/users");
 
 const us = new UserService();
 const ts = new TokenService();
@@ -9,10 +11,17 @@ const ts = new TokenService();
 module.exports = class AuthController {
     async loginUser(req, res) {
         try {
+            await validateUser.validateAsync(req.body);
             const { username, password } = req.body;
+
             if (!username || !password) return res.sendStatus(400);
 
-            const user = await us.getUserByUsername(username);
+            const user = await us.getUserByUsername(username, [
+                "id",
+                "username",
+                "password",
+            ]);
+
             if (!user) return res.sendStatus(404);
 
             const hasMatchingPass = await bcrypt.compare(
@@ -52,6 +61,8 @@ module.exports = class AuthController {
 
     async refreshAccessToken(req, res) {
         try {
+            await validateToken.validateAsync(req.body);
+
             const refreshToken = req.body.token;
 
             //no token provided not 403
