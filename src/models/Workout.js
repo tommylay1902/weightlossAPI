@@ -13,12 +13,16 @@ module.exports = (sequelize, DataTypes) => {
 
     Workout.associate = (models) => {
         Workout.belongsToMany(models.Exercise, {
-            through: "ExerciseToWorkouts",
+            through: {
+                model: "ExerciseToWorkouts",
+                unique: false,
+            },
             foreignKey: {
                 name: "workoutId",
                 target: "id",
             },
         });
+
         Workout.belongsTo(models.User, {
             foreignKey: "userId",
             targetKey: "id",

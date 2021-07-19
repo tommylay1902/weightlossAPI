@@ -58,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         });
 
+        //a user can have many exercises
         User.hasMany(models.Exercise, {
             foreignKey: {
                 name: "createdBy",

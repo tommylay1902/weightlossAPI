@@ -1,8 +1,10 @@
 const WorkoutService = require("../services/WorkoutService");
 const ExerciseToWorkoutService = require("../services/ExerciseToWorkoutService");
+const ExerciseService = require("../services/ExerciseService");
 
 const ws = new WorkoutService();
 const etws = new ExerciseToWorkoutService();
+const es = new ExerciseService();
 
 module.exports = class WorkoutController {
     async createWorkout(req, res) {
@@ -27,6 +29,10 @@ module.exports = class WorkoutController {
 
             if (!workout) return res.sendStatus(404);
             const { exerciseId } = req.body;
+
+            const exercise = await es.getExerciseById(exerciseId);
+
+            if (!exercise) return res.sendStatus(404);
 
             await etws.create(workoutId, exerciseId);
 

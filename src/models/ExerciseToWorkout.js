@@ -8,28 +8,8 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true,
                 allowNull: false,
             },
-            exerciseId: {
-                type: DataTypes.INTEGER(11),
 
-                references: {
-                    model: "Exercises",
-                    key: "id",
-                },
-                onDelete: "cascade",
-                onUpdate: "cascade",
-            },
-            workoutId: {
-                type: DataTypes.INTEGER(11),
-
-                references: {
-                    model: "Workouts",
-                    key: "id",
-                },
-                onDelete: "cascade",
-                onUpdate: "cascade",
-            },
-
-            selfGranted: DataTypes.BOOLEAN,
+            // selfGranted: DataTypes.BOOLEAN,
         },
         { timestamps: false }
     );
