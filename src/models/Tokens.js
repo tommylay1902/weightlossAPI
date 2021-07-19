@@ -5,5 +5,15 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    Tokens.associate = (models, options) => {
+        Tokens.belongsTo(models.User, {
+            foreignKey: {
+                name: "userId",
+                targetKey: "id",
+            },
+            onDelete: "CASCADE",
+        });
+    };
+
     return Tokens;
 };

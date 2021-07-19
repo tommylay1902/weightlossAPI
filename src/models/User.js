@@ -33,15 +33,29 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     User.associate = (models) => {
+        User.hasMany(models.Tokens, {
+            foreignKey: {
+                name: "userId",
+                targetKey: "id",
+            },
+        });
+
         //a user can have many Nutrition plans
         User.hasMany(models.Nutrition, {
-            foreignKey: "userId",
-            targetKey: "id",
+            foreignKey: {
+                name: "userId",
+                targetKey: "id",
+                onDelete: "cascade",
+            },
         });
+
         //a user can have many workout plans
         User.hasMany(models.Workouts, {
-            foreignKey: "userId",
-            targetKey: "id",
+            foreignKey: {
+                name: "userId",
+                targetKey: "id",
+                onDelete: "cascade",
+            },
         });
 
         User.hasMany(models.Exercise, {

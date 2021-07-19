@@ -9,8 +9,8 @@ module.exports = class TokenService {
         return token;
     }
 
-    async saveRefreshToken(token) {
-        await Tokens.create({ refreshToken: token });
+    async saveRefreshToken(data) {
+        await Tokens.create({ ...data });
     }
 
     async deleteToken(token) {

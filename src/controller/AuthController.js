@@ -45,7 +45,7 @@ module.exports = class AuthController {
                 { expiresIn: process.env.JWT_REFRESH_TIME }
             );
 
-            await ts.saveRefreshToken(refreshToken);
+            await ts.saveRefreshToken({ refreshToken, userId: user.id });
 
             const response = {
                 status: "Logged in",
