@@ -37,10 +37,10 @@ module.exports = class UserController {
     async deleteUser(req, res) {
         try {
             const { id } = req.userAuth;
-
-            return res.send({ id });
+            await us.deleteUser(id);
+            return res.sendStatus(200);
         } catch (e) {
-            return res.send(e.toString());
+            return res.status(500).send(e.toString());
         }
     }
 };

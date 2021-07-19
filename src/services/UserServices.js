@@ -21,8 +21,18 @@ module.exports = class UserService {
 
     //create user in database
     async createUser(user) {
-        await User.create({ ...user });
+        try {
+            await User.create({ ...user });
+        } catch (error) {}
     }
 
-    async deleteUser(user) {}
+    async deleteUser(id) {
+        try {
+            await User.destroy({
+                where: {
+                    id,
+                },
+            });
+        } catch (error) {}
+    }
 };
