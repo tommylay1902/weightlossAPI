@@ -7,6 +7,8 @@ const userRouter = require("./routes/userRouter");
 const nutritionRouter = require("./routes/nutritionRouter");
 const exerciseRouter = require("./routes/exerciseRouter");
 const authRouter = require("./routes/authRouter");
+const workoutRouter = require("./routes/workoutRouter");
+
 const db = require("./models");
 
 //dotenv config
@@ -33,8 +35,9 @@ app.use("/user", userRouter);
 app.use("/nutrition", nutritionRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/auth", authRouter);
+app.use("/workout", workoutRouter);
 
 //{force:true}
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
     app.listen(process.env.PORT, () => console.log("running"));
 });

@@ -17,18 +17,15 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    //hide sensitive data from user
-    Exercise.afterCreate(async (model, options) => {
-        delete model.dataValues.id;
-        delete model.dataValues.createdAt;
-        delete model.dataValues.updatedAt;
-        delete model.dataValues.createdBy;
-    });
-
     Exercise.associate = (models) => {
         Exercise.belongsToMany(models.Workouts, {
-            through: "ExerciseToWorkout",
+            through: "ExerciseToWorkouts",
+            foreignKey: {
+                name: "exerciseId",
+                target: "id",
+            },
         });
+
         Exercise.belongsTo(models.User, {
             foreignKey: {
                 name: "createdBy",
