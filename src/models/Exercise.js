@@ -11,16 +11,21 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.STRING(255),
         },
-        type: {
-            type: DataTypes.ENUM,
-            values: ["reps", "time"],
-        },
     });
 
     Exercise.associate = (models) => {
         Exercise.belongsToMany(models.Workouts, {
             through: {
                 model: "ExerciseToWorkouts",
+                unique: false,
+            },
+            foreignKey: "exerciseId",
+            otherKey: "workoutId",
+        });
+
+        Exercise.belongsToMany(models.ExerciseData, {
+            through: {
+                model: "ExerciseToExerciseData",
                 unique: false,
             },
 
@@ -34,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: {
                 name: "createdBy",
                 target: "id",
+                allowNull: false,
             },
         });
     };

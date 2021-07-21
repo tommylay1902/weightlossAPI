@@ -7,10 +7,24 @@ const etws = new ExerciseToWorkoutService();
 const es = new ExerciseService();
 
 module.exports = class WorkoutController {
+    //check this controller later for any any security issues
+    //gets workout and all associated exercises to the workout
+    async getSpecificWorkout(req, res) {
+        try {
+            const { workoutId } = req.params;
+
+            const workout = await ws.getExercisesAssociatedToWorkout(workoutId);
+
+            res.send(workout);
+        } catch (error) {
+            res.send(error.toString());
+        }
+    }
+
     async createWorkout(req, res) {
         try {
             const userId = req.userAuth.id;
-            await ws.createUserWorkout(req.body.name, userId);
+            await ws.createUserWorkout(req.body, userId);
             return res.sendStatus(201);
         } catch (error) {
             return res.send(error.toString());
@@ -19,7 +33,6 @@ module.exports = class WorkoutController {
 
     //takes in the id of the workout through params, and the exerciseId in the body to create a record in
     // the ExerciseToWorkout Table
-
     async addExerciseToWorkout(req, res) {
         try {
             const userId = req.userAuth.id;
@@ -34,7 +47,7 @@ module.exports = class WorkoutController {
 
             if (!exercise) return res.sendStatus(404);
 
-            await etws.create(workoutId, exerciseId);
+            await etws.create(exerciseId, workoutId);
 
             return res.sendStatus(200);
         } catch (error) {

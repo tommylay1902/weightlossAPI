@@ -8,8 +8,7 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true,
                 allowNull: false,
             },
-
-            // selfGranted: DataTypes.BOOLEAN,
+            //selfGranted: DataTypes.BOOLEAN,
         },
         { timestamps: false }
     );

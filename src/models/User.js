@@ -51,11 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 
         //a user can have many workout plans
         User.hasMany(models.Workouts, {
-            foreignKey: {
-                name: "userId",
-                targetKey: "id",
-                onDelete: "cascade",
-            },
+            foreignKey: { name: "userId" },
         });
 
         //a user can have many exercises

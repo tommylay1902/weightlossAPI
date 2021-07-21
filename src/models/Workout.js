@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        description: {
+            type: DataTypes.STRING,
+        },
     });
 
     Workout.associate = (models) => {
@@ -17,15 +20,12 @@ module.exports = (sequelize, DataTypes) => {
                 model: "ExerciseToWorkouts",
                 unique: false,
             },
-            foreignKey: {
-                name: "workoutId",
-                target: "id",
-            },
+            foreignKey: "workoutId",
+            otherKey: "exerciseId",
         });
 
         Workout.belongsTo(models.User, {
-            foreignKey: "userId",
-            targetKey: "id",
+            foreignKey: { name: "userId" },
         });
     };
 

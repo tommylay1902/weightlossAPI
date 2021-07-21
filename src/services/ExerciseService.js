@@ -18,9 +18,10 @@ module.exports = class ExerciseServices {
                     id,
                     createdBy: userId,
                 },
-                attributes: ["name", "description", "type"],
+                attributes: {
+                    exclude: ["id", "createdAt", "updatedAt", "createdBy"],
+                },
             });
-
             return exercise;
         } catch (error) {}
     }

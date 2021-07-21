@@ -13,7 +13,9 @@ module.exports = class NutritionService {
                     { userId },
                 ],
             },
-            attributes: ["name", "calories", "fat", "carbs", "protein"],
+            attributes: {
+                exclude: ["id", "createdAt", "updatedAt", "userId"],
+            },
         });
 
         return nutrition;
@@ -25,7 +27,9 @@ module.exports = class NutritionService {
             where: {
                 userId,
             },
-            attributes: ["name", "calories", "fat", "carbs", "protein"],
+            attributes: {
+                exclude: ["id", "createdAt", "updatedAt", "userId"],
+            },
         });
 
         return nutritions;
