@@ -7,6 +7,15 @@ const etws = new ExerciseToWorkoutService();
 const es = new ExerciseService();
 
 module.exports = class WorkoutController {
+    async getWorkouts(req, res) {
+        try {
+            const userId = req.userAuth.id;
+            const workouts = await ws.getWorkoutsByUser(userId);
+
+            res.send(workouts);
+        } catch (error) {}
+    }
+
     //check this controller later for any any security issues
     //gets workout and all associated exercises to the workout
     async getSpecificWorkout(req, res) {

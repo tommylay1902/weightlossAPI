@@ -2,6 +2,17 @@ const { Workouts, Exercise, ExerciseToWorkouts } = require("../models");
 
 module.exports = class WorkoutService {
     //return all exercises associated to the workout
+
+    async getWorkoutsByUser(userId) {
+        try {
+            const results = await Workouts.findAll({
+                where: { userId },
+            });
+            return results;
+        } catch (error) {
+            console.log(error.toString());
+        }
+    }
     async getExercisesAssociatedToWorkout(workoutId) {
         try {
             const results = await Workouts.findAll({

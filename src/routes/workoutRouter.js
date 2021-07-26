@@ -6,6 +6,7 @@ const auth = require("../middleware/verifyToken");
 const WorkoutController = require("../controller/WorkoutController");
 const wc = new WorkoutController();
 
+router.get("", auth, wc.getWorkouts);
 router.get("/:workoutId", auth, wc.getSpecificWorkout);
 
 //come back to this and think if this belongs in this route
